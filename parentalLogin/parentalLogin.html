@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GAME TRACKING - Register</title>
+    <title>Parent Login</title>
     <style>
       /* General Reset */
       * {
@@ -101,24 +101,41 @@
         background-color: #099ea5;
       }
 
+      /* Login Link */
+      .login-link {
+        margin-top: 20px;
+        font-size: 0.9em;
+      }
+
+      .login-link a {
+        color: #0fa3b1;
+        text-decoration: none;
+      }
+
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+
       /* Responsive Design */
       @media (max-width: 600px) {
         .header h1 {
           font-size: 1.8em;
+        }
+
+        .register {
+          padding: 30px;
         }
       }
     </style>
   </head>
   <body>
     <div class="header">
-      <header>
-        <h1>Register to GAME TRACKING SYSTEM</h1>
-      </header>
+      <h1>Login to GAME TRACKING SYSTEM</h1>
     </div>
 
     <div class="register">
-      <h1>REGISTER DETAILS</h1>
-      <form id="registerForm">
+      <h1>Parent Login</h1>
+      <form id="loginForm">
         <label for="username">Username:</label><br />
         <input
           type="text"
@@ -135,36 +152,27 @@
           placeholder="Enter Password"
           required
         /><br /><br />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Login" />
       </form>
+      <div class="login-link">
+        <p>
+          Not registered yet?
+          <a href="parentRegistration.html">Register here</a>
+        </p>
+      </div>
     </div>
 
     <script>
-      const registerForm = document.getElementById("registerForm");
+      const loginForm = document.getElementById("loginForm");
 
-      registerForm.addEventListener("submit", async (event) => {
+      loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        // Username validation
-        if (username.length <= 1) {
-          alert("Username must be more than 1 character.");
-          return;
-        }
-
-        // Password validation
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-        if (!passwordPattern.test(password)) {
-          alert(
-            "Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 digit."
-          );
-          return;
-        }
-
         try {
-          const response = await fetch("http://localhost:5000/register", {
+          const response = await fetch("http://localhost:5000/parent/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),
@@ -173,7 +181,7 @@
           const data = await response.json();
           if (response.ok) {
             alert(data.message);
-            window.location.href = "index.html";
+            window.location.href = "parentDashboard.html"; // Redirect to parent dashboard
           } else {
             alert(data.error);
           }

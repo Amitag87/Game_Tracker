@@ -3,22 +3,135 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GAME TRACKING - Login</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Gamer Registration</title>
+    <style>
+      /* Styles from previous code */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #1a1a1d;
+        color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        background: #2a2a34;
+        border-bottom: 2px solid #0fa3b1;
+      }
+
+      .header h1 {
+        color: #0fa3b1;
+        font-size: 2em;
+        letter-spacing: 2px;
+      }
+
+      /* Registration Box */
+      .register {
+        background: #333;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .register h1 {
+        color: #0fa3b1;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+      }
+
+      /* Form Styling */
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin: 10px 0 5px;
+        font-weight: bold;
+        color: #c3c3c3;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 1em;
+        background: #444;
+        color: #fff;
+        outline: none;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border: 1px solid #0fa3b1;
+      }
+
+      /* Submit Button */
+      input[type="submit"] {
+        background-color: #0fa3b1;
+        color: #fff;
+        font-size: 1em;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #099ea5;
+      }
+
+      /* Login Link */
+      .login-link {
+        margin-top: 20px;
+        font-size: 0.9em;
+      }
+
+      .login-link a {
+        color: #0fa3b1;
+        text-decoration: none;
+      }
+
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        .header h1 {
+          font-size: 1.8em;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="header">
-      <header>
-        <h1>GAME TRACKING SYSTEM</h1>
-      </header>
+      <h1>Register to GAME TRACKING SYSTEM</h1>
     </div>
 
-    <div class="login">
-      <h1>LOGIN DETAILS</h1>
-      <h2>
-        <b><i>Gamer Login</i></b>
-      </h2>
-      <form id="loginForm">
+    <div class="register">
+      <h1>Gamer Register</h1>
+      <form id="registerForm">
         <label for="username">Username:</label><br />
         <input
           type="text"
@@ -35,50 +148,63 @@
           placeholder="Enter Password"
           required
         /><br /><br />
-        <input type="submit" value="Login" />
+        <input type="submit" value="Register" />
       </form>
-
-      <h3><a href="register.html">Register Here</a></h3>
-      <h3>
-        <a href="../parentalLogin/parentLogin.html">Parent Login</a>
-      </h3>
-    </div>
-
-    <div class="footer">
-      <footer>
-        Contact us: <br />
-        Email: info@gamerzone.in <br />
-        Phone: 9999999999999 <br />
-        Address: CyberHub, Gurugram
-      </footer>
+      <div class="login-link">
+        <p>Already registered? <a href="gamerLogin.html">Login here</a></p>
+        <p>
+          Parent? <a href="/parentalLogin/parentalLogin.html">Login here</a>
+        </p>
+      </div>
     </div>
 
     <script>
-      const loginForm = document.getElementById("loginForm");
-      loginForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
+            const registerForm = document.getElementById("registerForm");
 
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+            registerForm.addEventListener("submit", async (event) => {
+              event.preventDefault();
 
-        try {
-          const response = await fetch("http://localhost:5000/submit_form", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
-          });
+              const username = document.getElementById("username").value;
+              const password = document.getElementById("password").value;
 
-          const data = await response.json();
-          if (response.ok) {
-            alert(data.message);
-            console.log("JWT Token:", data.token);
-          } else {
-            alert(data.error);
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred. Please try again.");
-        }
+              // Username validation
+              if (username.length <= 1) {
+                alert("Username must be more than 1 character.");
+                return;
+              }
+
+              // Password validation
+              const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+              if (!passwordPattern.test(password)) {
+                alert(
+                  "Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 digit."
+                );
+                return;
+              }
+
+              try {
+                const response = await fetch("http://localhost:5000/gamer/register", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                  alert(data.message);
+                  window.location.href = "gamerLogin.html"; // Redirect to gamer login
+                } else {
+                  alert(data.error);
+                }
+              } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+              }
+            });
+            const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
     </script>
   </body>

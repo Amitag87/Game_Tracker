@@ -3,122 +3,247 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parent Registration - GAME TRACKING</title>
-    <link rel="stylesheet" href="style.css" />
-    <script>
-      function validateForm() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const confirmPassword =
-          document.getElementById("confirmPassword").value;
-
-        // Username validation
-        if (username.length <= 1) {
-          alert("Username must be more than 1 character.");
-          return false;
-        }
-
-        // Password validation
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$/;
-        if (!passwordPattern.test(password)) {
-          alert(
-            "Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 digit."
-          );
-          return false;
-        }
-
-        // Confirm password validation
-        if (password !== confirmPassword) {
-          alert("Passwords do not match.");
-          return false;
-        }
-
-        return true;
+    <title>Parent Registration</title>
+    <style>
+      /* Styles from previous code */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
       }
-    </script>
+
+      body {
+        background-color: #1a1a1d;
+        color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        background: #2a2a34;
+        border-bottom: 2px solid #0fa3b1;
+      }
+
+      .header h1 {
+        color: #0fa3b1;
+        font-size: 2em;
+        letter-spacing: 2px;
+      }
+
+      /* Main Registration Container */
+      .registration-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 30px;
+        width: 90%;
+        max-width: 800px;
+      }
+
+      /* Parent Registration Box */
+      .registration {
+        background: #333;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .registration h1 {
+        color: #0fa3b1;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+      }
+
+      .registration h2 {
+        color: #0fa3b1;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        font-weight: normal;
+      }
+
+      /* Form Styling */
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin: 10px 0 5px;
+        font-weight: bold;
+        color: #c3c3c3;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 1em;
+        background: #444;
+        color: #fff;
+        outline: none;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        border: 1px solid #0fa3b1;
+      }
+
+      /* Submit Button */
+      input[type="submit"] {
+        background-color: #0fa3b1;
+        color: #fff;
+        font-size: 1em;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #099ea5;
+      }
+
+      /* Hyperlink Styling */
+      .register-link {
+        color: #0fa3b1;
+        font-size: 0.9em;
+        margin-top: 10px;
+      }
+
+      .register-link a {
+        color: #0fa3b1;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Footer */
+      .footer {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        background: #2a2a34;
+        border-top: 2px solid #0fa3b1;
+        margin-top: 30px;
+      }
+
+      .footer p {
+        color: #c3c3c3;
+        font-size: 0.9em;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        .header h1 {
+          font-size: 1.8em;
+        }
+        .registration h1 {
+          font-size: 1.3em;
+        }
+        .registration h2 {
+          font-size: 1.1em;
+        }
+      }
+    </style>
   </head>
   <body>
-    <br /><br />
     <div class="header">
-      <header>
-        <h1><br />GAME TRACKING SYSTEM<br /><br /></h1>
-      </header>
+      <h1>Register to GAME TRACKING SYSTEM</h1>
     </div>
-    <br /><br /><br /><br /><br />
 
-    <div class="registration">
-      <h1>REGISTRATION DETAILS</h1>
-      <h2>
-        <b><i>Parent Registration</i></b>
-      </h2>
-
-      <form
-        action="/register_parent"
-        method="post"
-        onsubmit="return validateForm()"
-      >
-        <label for="fullName">Full Name:</label><br />
-        <input
-          type="text"
-          id="fullName"
-          name="fullName"
-          placeholder="Enter Full Name"
-          required
-        /><br />
-
-        <label for="email">Email:</label><br />
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter Email"
-          required
-        /><br />
-
+    <div class="register">
+      <h1>Parent Register</h1>
+      <form id="registerForm">
         <label for="username">Username:</label><br />
         <input
           type="text"
           id="username"
           name="username"
-          placeholder="Choose a Username"
+          placeholder="Enter Username"
           required
         /><br />
-
         <label for="password">Password:</label><br />
         <input
           type="password"
           id="password"
           name="password"
-          placeholder="Create a Password"
-          required
-        /><br />
-
-        <label for="confirmPassword">Confirm Password:</label><br />
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          placeholder="Confirm Password"
+          placeholder="Enter Password"
           required
         /><br /><br />
-
         <input type="submit" value="Register" />
       </form>
-
-      <h3>
-        Already have an account?
-        <a href="parentLogin.html">Login here</a>
-      </h3>
+      <div class="login-link">
+        <p>Already registered? <a href="parentalLogin.html">Login here</a></p>
+      </div>
     </div>
 
-    <div class="footer">
-      <footer>
-        <br /><br />
-        Contact us: <br />
-        Email: info@gamerzone.in <br />
-        Phone: 9999999999999 <br />
-        Address: CyberHub, Gurugram<br /><br />
-      </footer>
-    </div>
+    <script>
+      const registerForm = document.getElementById("registerForm");
+
+      registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Username validation
+        if (username.length <= 1) {
+          alert("Username must be more than 1 character.");
+          return;
+        }
+
+        // Password validation
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordPattern.test(password)) {
+          alert(
+            "Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 digit."
+          );
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            "http://localhost:5000/parent/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            }
+          );
+
+          const data = await response.json();
+          if (response.ok) {
+            alert(data.message);
+            window.location.href = "parentalLogin.html"; // Redirect to parent login
+          } else {
+            alert(data.error);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        }
+      });
+    </script>
   </body>
 </html>

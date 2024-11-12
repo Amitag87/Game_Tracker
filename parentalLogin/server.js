@@ -1,54 +1,36 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const app = express();
-const PORT = 3000;
+const port = 5000;
 
+// Dummy database for demonstration purposes
+const parentUsers = [
+  { username: 'parent1', password: '$2b$10$Nfj9.ZzXOyqlfCVw.gpD5OWb2jj3d89eH5FZ32tdwHvdyxNdfmdKa' } // password: 'Password123'
+];
 
-mongoose.connect('<DB_CONNECTION>', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+app.use(bodyParser.json());
 
-const parentSchema = new mongoose.Schema({
-    fullName: String,
-    email: { type: String, unique: true },
-    username: { type: String, unique: true },
-    password: String,
-});
+// Parent Login Route
+app.post('/parent/login', (req, res) => {
+  const { username, password } = req.body;
+  const parent = parentUsers.find((user) => user.username === username);
 
+  if (!parent) {
+    return res.status(401).json({ error: 'User not found' });
+  }
 
-const Parent = mongoose.model('Parent', parentSchema);
-
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
-
-app.post('/register_parent', async (req, res) => {
-    try {
-        const { fullName, email, username, password, confirmPassword } = req.body;
-
-    
-        if (password !== confirmPassword) {
-            return res.status(400).send('Passwords do not match');
-        }
-
-        
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        
-        const newParent = new Parent({ fullName, email, username, password: hashedPassword });
-
-        
-        await newParent.save();
-        res.status(201).send('Registration successful! You can now log in.');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error registering parent. Please try again.');
+  bcrypt.compare(password, parent.password, (err, isMatch) => {
+    if (err) {
+      return res.status(500).json({ error: 'Internal server error' });
     }
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    res.status(200).json({ message: 'Login successful' });
+  });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
