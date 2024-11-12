@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parent Registration - GAME TRACKING</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      function validateForm() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        // Username validation
+        if (username.length <= 1) {
+          alert("Username must be more than 1 character.");
+          return false;
+        }
+
+        // Password validation
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$/;
+        if (!passwordPattern.test(password)) {
+          alert(
+            "Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, and 1 digit."
+          );
+          return false;
+        }
+
+        // Confirm password validation
+        if (password !== confirmPassword) {
+          alert("Passwords do not match.");
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  </head>
+  <body>
+    <br /><br />
+    <div class="header">
+      <header>
+        <h1><br />GAME TRACKING SYSTEM<br /><br /></h1>
+      </header>
+    </div>
+    <br /><br /><br /><br /><br />
+
+    <div class="registration">
+      <h1>REGISTRATION DETAILS</h1>
+      <h2>
+        <b><i>Parent Registration</i></b>
+      </h2>
+
+      <form
+        action="/register_parent"
+        method="post"
+        onsubmit="return validateForm()"
+      >
+        <label for="fullName">Full Name:</label><br />
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          placeholder="Enter Full Name"
+          required
+        /><br />
+
+        <label for="email">Email:</label><br />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter Email"
+          required
+        /><br />
+
+        <label for="username">Username:</label><br />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Choose a Username"
+          required
+        /><br />
+
+        <label for="password">Password:</label><br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Create a Password"
+          required
+        /><br />
+
+        <label for="confirmPassword">Confirm Password:</label><br />
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          required
+        /><br /><br />
+
+        <input type="submit" value="Register" />
+      </form>
+
+      <h3>
+        Already have an account?
+        <a href="parentLogin.html">Login here</a>
+      </h3>
+    </div>
+
+    <div class="footer">
+      <footer>
+        <br /><br />
+        Contact us: <br />
+        Email: info@gamerzone.in <br />
+        Phone: 9999999999999 <br />
+        Address: CyberHub, Gurugram<br /><br />
+      </footer>
+    </div>
+  </body>
+</html>
